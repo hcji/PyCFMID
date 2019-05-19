@@ -181,7 +181,7 @@ def cfm_id_database(spectrum_dataframe, formula, energy_level='high', database='
     spectrum_file = write_spectrum(spectrum_dataframe, spectrum_file, energy_level)
     if database == 'biodb':
         candidates = search_biodatabase(formula, candidate_file)
-    elif database == 'database':
+    elif database == 'pubchem':
         candidates = search_pubchem(formula, candidate_file)
     else:
         candidates = pd.read_csv(database)

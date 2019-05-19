@@ -11,7 +11,7 @@ Only Windows platform is support unitl now because of compile error in Linux (is
 
 ### Install
     
-    pip install git+https://github.com/hcji/PyCFMID@master
+    git+git://github.com/hcji/PyCFMID@master
 
 ## Usage
 
