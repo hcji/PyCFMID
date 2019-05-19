@@ -15,7 +15,10 @@ import subprocess
 import pandas as pd
 import numpy as np
 import ssl
+import PyCFMID
 ssl._create_default_https_context = ssl._create_unverified_context
+
+package_path = PyCFMID.__path__[0]
 
 def check_output_file(output_file=None):
     if output_file is None:
@@ -39,7 +42,7 @@ def check_input_file(input_dir=None):
 
 def fraggraph_gen(smiles, max_depth=2, ionization_mode='+', fullgraph=True, output_file=None):
     output_file = check_output_file(output_file)
-    program = os.path.join('PyCFMID', platform.platform().split('-')[0], 'fraggraph-gen.exe')
+    program = os.path.join(package_path, platform.platform().split('-')[0], 'fraggraph-gen.exe')
     cmd = os.path.join(os.getcwd(), program)
     cmd += ' ' + str(smiles)
     cmd += ' ' + str(max_depth)
@@ -69,13 +72,17 @@ def parser_fraggraph_gen(output_file):
     return {'fragments': fragments, 'losses': losses}
 
 
-def cfm_predict(smiles, prob_thresh=0.001, param_file='', config_file='', annotate_fragments=False, output_file=None, apply_postproc=True, suppress_exceptions=False):
+def cfm_predict(smiles, prob_thresh=0.001, ion_source='ESI', param_file='', config_file='', annotate_fragments=False, output_file=None, apply_postproc=True, suppress_exceptions=False):
     output_file = check_output_file(output_file)
+    if ion_source == 'ESI':
+        config = 'esi_config'
+    else:
+        config = 'ei_config'
     if param_file == '':
-        param_file = os.path.join(os.getcwd(), 'PyCFMID', 'Pretrain', 'ESI', 'param_output0.log')
+        param_file = os.path.join(package_path, config + '.log')
     if config_file == '':
-        config_file = os.path.join(os.getcwd(), 'PyCFMID', 'Pretrain', 'ESI', 'param_config.txt')
-    program = os.path.join('PyCFMID', platform.platform().split('-')[0], 'cfm-predict.exe')
+        config_file = os.path.join(package_path, config + '.txt')
+    program = os.path.join(package_path, platform.platform().split('-')[0], 'cfm-predict.exe')
     cmd = os.path.join(os.getcwd(), program)
     cmd += ' ' + smiles
     cmd += ' ' + str(prob_thresh)
@@ -127,13 +134,17 @@ def parser_cfm_predict(output_file):
     return {'low_energy': low_energy, 'medium_energy': medium_energy, 'high_energy': high_energy}
 
 
-def cfm_id(spectrum_file, candidate_file, num_highest=-1, ppm_mass_tol=10, abs_mass_tol=0.01, prob_thresh=0.001, param_file='', config_file='', score_type='Jaccard', apply_postprocessing=True, output_file=None):
+def cfm_id(spectrum_file, candidate_file, num_highest=-1, ppm_mass_tol=10, abs_mass_tol=0.01, prob_thresh=0.001, ion_source='ESI', param_file='', config_file='', score_type='Jaccard', apply_postprocessing=True, output_file=None):
     output_file = check_output_file(output_file)
+    if ion_source == 'ESI':
+        config = 'esi_config'
+    else:
+        config = 'ei_config'
     if param_file == '':
-        param_file = os.path.join(os.getcwd(), 'PyCFMID', 'Pretrain', 'ESI', 'param_output0.log')
+        param_file = os.path.join(package_path, config + '.log')
     if config_file == '':
-        config_file = os.path.join(os.getcwd(), 'PyCFMID', 'Pretrain', 'ESI', 'param_config.txt')
-    program = os.path.join('PyCFMID', platform.platform().split('-')[0], 'cfm-id.exe')
+        config_file = os.path.join(package_path, config + '.txt')
+    program = os.path.join(package_path, platform.platform().split('-')[0], 'cfm-id.exe')
     cmd = os.path.join(os.getcwd(), program)
     cmd += ' ' + spectrum_file
     cmd += ' ' + 'AN_ID'
@@ -154,13 +165,17 @@ def cfm_id(spectrum_file, candidate_file, num_highest=-1, ppm_mass_tol=10, abs_m
     return parser_cfm_id(output_file)
 
 
-def cfm_id_database(spectrum_dataframe, formula, energy_level='high', database='biodb', input_dir=None, num_highest=-1, ppm_mass_tol=10, abs_mass_tol=0.01, prob_thresh=0.001, param_file='', config_file='', score_type='Jaccard', apply_postprocessing=True, output_file=None):
+def cfm_id_database(spectrum_dataframe, formula, energy_level='high', database='biodb', input_dir=None, num_highest=-1, ppm_mass_tol=10, abs_mass_tol=0.01, prob_thresh=0.001, ion_source='ESI', param_file='', config_file='', score_type='Jaccard', apply_postprocessing=True, output_file=None):
     input_dir = check_input_file(input_dir)
     output_file = check_output_file(output_file)
+    if ion_source == 'ESI':
+        config = 'esi_config'
+    else:
+        config = 'ei_config'
     if param_file == '':
-        param_file = os.path.join(os.getcwd(), 'PyCFMID', 'Pretrain', 'ESI', 'param_output0.log')
+        param_file = os.path.join(package_path, config + '.log')
     if config_file == '':
-        config_file = os.path.join(os.getcwd(), 'PyCFMID', 'Pretrain', 'ESI', 'param_config.txt')
+        config_file = os.path.join(package_path, config + '.txt')
     spectrum_file = os.path.join(input_dir, 'spectrum.txt')
     candidate_file = os.path.join(input_dir, 'candidate.txt')
     spectrum_file = write_spectrum(spectrum_dataframe, spectrum_file, energy_level)
@@ -172,7 +187,7 @@ def cfm_id_database(spectrum_dataframe, formula, energy_level='high', database='
         candidates = pd.read_csv(database)
         output = pd.DataFrame({'ID': candidates.index, 'Smiles': candidates['SMILES']})
         output.to_csv(candidate_file, header=False, index=False, sep=' ')
-    result = cfm_id(spectrum_file, candidate_file, num_highest, ppm_mass_tol, abs_mass_tol, prob_thresh, param_file, config_file, score_type, apply_postprocessing, output_file)
+    result = cfm_id(spectrum_file, candidate_file, num_highest, ppm_mass_tol, abs_mass_tol, prob_thresh, ion_source, param_file, config_file, score_type, apply_postprocessing, output_file)
     return {'candidates':candidates, 'result':result}
     
     
