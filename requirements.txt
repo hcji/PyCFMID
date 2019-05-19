@@ -1,0 +1,7 @@
+# Installation
+bs4
+requests
+pubchempy
+
+# test
+coverage
