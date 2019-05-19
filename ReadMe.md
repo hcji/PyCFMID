@@ -18,7 +18,7 @@ Only Windows platform is support unitl now because of compile error in Linux (is
 ### fraggraph_gen
 This program produces a complete fragmentation graph or list of feasible fragments for an input molecule. It systematically breaks bonds within the molecule and checks for valid resulting fragments as described in section 2.1.1 of the above publication.
 	
-	from PyCFMID import fraggraph_gen
+	from PyCFMID.PyCFMID import fraggraph_gen
 	frags = fraggraph_gen(smiles, max_depth=2, ionization_mode='+', fullgraph=True, output_file=None)
 
 **smiles**: The smiles strings for the input molecule to fragment.  
@@ -30,7 +30,7 @@ This program produces a complete fragmentation graph or list of feasible fragmen
 ### cfm_predict
 This program predicts spectra for an input molecule given a pre-trained CFM model.
 
-	from PyCFMID import cfm_predict
+	from PyCFMID.PyCFMID import cfm_predict
 	spectra = cfm_predict(smiles, prob_thresh=0.001, param_file='', config_file='', annotate_fragments=False, output_file=None, apply_postproc=True, suppress_exceptions=False)
 	
 **smiles**: The smiles strings for the input molecule to fragment.  
@@ -45,7 +45,7 @@ This program predicts spectra for an input molecule given a pre-trained CFM mode
 ### cfm_id
 Given an input spectrum and a list of candidate smiles strings, this program computes the predicted spectrum for each candidate and compares it to the input spectrum. It returns a ranking of the candidates according to how closely they match. The spectrum prediction is done using a pre-trained CFM model.
 
-	from PyCFMID import cfm_id
+	from PyCFMID.PyCFMID import cfm_id
 	result = cfm_id(spectrum_file, candidate_file, num_highest=-1, ppm_mass_tol=10, abs_mass_tol=0.01, prob_thresh=0.001, param_file='', config_file='', score_type='Jaccard', apply_postprocessing=True, output_file=None)
 
 **spectrum_file**: The filename where the input the spectrum. see [example_spectra.txt](https://sourceforge.net/p/cfm-id/code/HEAD/tree/cfm/example_spec.txt) as an example.   
@@ -63,7 +63,7 @@ Given an input spectrum and a list of candidate smiles strings, this program com
 ### cfm_id_database
 Given an input spectrum, this program retrieves candidates automatically and computes the predicted spectrum for each candidate and compares it to the input spectrum. It returns a ranking of the candidates according to how closely they match. The spectrum prediction is done using a pre-trained CFM model.
 
-	from PyCFMID import cfm_id
+	from PyCFMID.PyCFMID import cfm_id_database
 	cfm_id_database(spectrum_dataframe, formula, energy_level='high', database='biodb', input_dir=None, num_highest=-1, ppm_mass_tol=10, abs_mass_tol=0.01, prob_thresh=0.001, param_file='', config_file='', score_type='Jaccard', apply_postprocessing=True, output_file=None)
 	
 **spectrum_dataframe**: A two-column dataframe with m/z and intensity of a spectrum.  
