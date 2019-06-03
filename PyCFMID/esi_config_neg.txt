@@ -1,0 +1,16 @@
+lambda 1.0
+em_converge_thresh 10.0
+ga_converge_thresh 1.0
+model_depth 2
+use_single_energy_cfm 1
+spectrum_depth 2
+spectrum_depth 2
+spectrum_depth 2
+spectrum_weight 1
+spectrum_weight 1
+spectrum_weight 1
+num_em_restarts 1
+starting_step_size 0.01
+ipfp_converge_thresh 0.005
+osc_ipfp_converge_thresh 0.999
+ionization_mode 2
