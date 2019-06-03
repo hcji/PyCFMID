@@ -2,4 +2,6 @@ include PyCFMID/ei_config.log
 include PyCFMID/ei_config.txt
 include PyCFMID/esi_config.log
 include PyCFMID/esi_config.txt
+include PyCFMID/esi_config_neg.log
+include PyCFMID/esi_config_neg.txt
 include PyCFMID/Windows/*
