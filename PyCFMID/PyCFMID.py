@@ -73,10 +73,13 @@ def parser_fraggraph_gen(output_file):
     return {'fragments': fragments, 'losses': losses}
 
 
-def cfm_predict(smiles, prob_thresh=0.001, ion_source='ESI', param_file='', config_file='', annotate_fragments=False, output_file=None, apply_postproc=True, suppress_exceptions=False):
+def cfm_predict(smiles, prob_thresh=0.001, ion_source='ESI', ionization_mode='+', param_file='', config_file='', annotate_fragments=False, output_file=None, apply_postproc=True, suppress_exceptions=False):
     output_file = check_output_file(output_file)
     if ion_source == 'ESI':
-        config = 'esi_config'
+        if ionization_mode == '+':
+            config = 'esi_config'
+        else:
+            config = 'esi_config_neg'
     else:
         config = 'ei_config'
     if param_file == '':
@@ -135,10 +138,13 @@ def parser_cfm_predict(output_file):
     return {'low_energy': low_energy, 'medium_energy': medium_energy, 'high_energy': high_energy}
 
 
-def cfm_id(spectrum_file, candidate_file, num_highest=-1, ppm_mass_tol=10, abs_mass_tol=0.01, prob_thresh=0.001, ion_source='ESI', param_file='', config_file='', score_type='Jaccard', apply_postprocessing=True, output_file=None):
+def cfm_id(spectrum_file, candidate_file, num_highest=-1, ppm_mass_tol=10, abs_mass_tol=0.01, prob_thresh=0.001, ion_source='ESI', ionization_mode='+', param_file='', config_file='', score_type='Jaccard', apply_postprocessing=True, output_file=None):
     output_file = check_output_file(output_file)
     if ion_source == 'ESI':
-        config = 'esi_config'
+        if ionization_mode == '+':
+            config = 'esi_config'
+        else:
+            config = 'esi_config_neg'
     else:
         config = 'ei_config'
     if param_file == '':
@@ -166,11 +172,14 @@ def cfm_id(spectrum_file, candidate_file, num_highest=-1, ppm_mass_tol=10, abs_m
     return parser_cfm_id(output_file)
 
 
-def cfm_id_database(spectrum_dataframe, formula, energy_level='high', database='biodb', input_dir=None, num_highest=-1, ppm_mass_tol=10, abs_mass_tol=0.01, prob_thresh=0.001, ion_source='ESI', param_file='', config_file='', score_type='Jaccard', apply_postprocessing=True, output_file=None):
+def cfm_id_database(spectrum_dataframe, formula, energy_level='high', database='biodb', input_dir=None, num_highest=-1, ppm_mass_tol=10, abs_mass_tol=0.01, prob_thresh=0.001, ion_source='ESI', ionization_mode='+', param_file='', config_file='', score_type='Jaccard', apply_postprocessing=True, output_file=None):
     input_dir = check_input_file(input_dir)
     output_file = check_output_file(output_file)
     if ion_source == 'ESI':
-        config = 'esi_config'
+        if ionization_mode == '+':
+            config = 'esi_config'
+        else:
+            config = 'esi_config_neg'
     else:
         config = 'ei_config'
     if param_file == '':
