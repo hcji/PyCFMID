@@ -7,7 +7,10 @@ uses Competitive Fragmentation Modeling to produce a probabilistic generative mo
 learning techniques to adapt the model parameters from data.  
 
 ## Note
-Only Windows platform is support unitl now because of compile error in Linux (issue #1). 
+This is not an official warpper.  
+Only Windows platform is support unitl now because of compile error in Linux (issue #1).   
+The CFM-ID version is 2.4, download from https://sourceforge.net/projects/cfm-id/.  
+CFM-ID 3.x version is only available with web server http://cfmid3.wishartlab.com.  
 
 ### Install
     
