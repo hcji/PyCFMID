@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Apr  2 16:25:14 2019
-
-@author: hcji
-"""
-
 import os
 import platform
 import json
@@ -19,6 +12,7 @@ import PyCFMID
 ssl._create_default_https_context = ssl._create_unverified_context
 
 package_path = PyCFMID.__path__[0]
+cwd = os.path.join(package_path, 'Windows')
 
 def check_output_file(output_file=None):
     if output_file is None:
@@ -52,7 +46,7 @@ def fraggraph_gen(smiles, max_depth=2, ionization_mode='+', fullgraph=True, outp
     else:
         cmd += ' fragonly'
     cmd += ' ' + str(output_file)
-    subprocess.call(cmd)
+    subprocess.call(cmd, cwd =cwd)
     return parser_fraggraph_gen(output_file)
     
     
@@ -104,7 +98,7 @@ def cfm_predict(smiles, prob_thresh=0.001, ion_source='ESI', ionization_mode='+'
         cmd += ' ' + str(1)
     else:
         cmd += ' ' + str(0)
-    subprocess.call(cmd)
+    subprocess.call(cmd, cwd =cwd)
     return parser_cfm_predict(output_file)
     
     
@@ -167,7 +161,7 @@ def cfm_id(spectrum_file, candidate_file, num_highest=-1, ppm_mass_tol=10, abs_m
     else:
         cmd += ' ' + str(0)   
     cmd += ' ' + output_file
-    subprocess.call(cmd)
+    subprocess.call(cmd, cwd =cwd)
     return parser_cfm_id(output_file)
 
 
@@ -196,7 +190,7 @@ def cfm_id_database(spectrum_dataframe, formula, energy_level='high', database='
         candidates = pd.read_csv(database)
         output = pd.DataFrame({'ID': candidates.index, 'Smiles': candidates['SMILES']})
         output.to_csv(candidate_file, header=False, index=False, sep=' ')
-    result = cfm_id(spectrum_file, candidate_file, num_highest, ppm_mass_tol, abs_mass_tol, prob_thresh, ion_source, param_file, config_file, score_type, apply_postprocessing, output_file)
+    result = cfm_id(spectrum_file, candidate_file, num_highest, ppm_mass_tol, abs_mass_tol, prob_thresh, ion_source, ionization_mode, param_file, config_file, score_type, apply_postprocessing, output_file)
     return {'candidates':candidates, 'result':result}
     
     
