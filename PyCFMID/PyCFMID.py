@@ -59,8 +59,8 @@ def parser_fraggraph_gen(output_file):
     frag_mass = [output[i].split(' ')[1] for i in range(1, nfrags+1)] 
     frag_smiles = [output[i].split(' ')[2] for i in range(1, nfrags+1)]
     loss_from = [output[i].split(' ')[0] for i in range(nfrags+2, len(output))] 
-    loss_to = [output[i].split(' ')[0] for i in range(nfrags+2, len(output))]
-    loss_smiles = [output[i].split(' ')[0] for i in range(nfrags+2, len(output))]
+    loss_to = [output[i].split(' ')[1] for i in range(nfrags+2, len(output))]
+    loss_smiles = [output[i].split(' ')[2] for i in range(nfrags+2, len(output))]
     fragments = pd.DataFrame({'index': frag_index, 'mass': frag_mass, 'smiles': frag_smiles})
     losses = pd.DataFrame({'from': loss_from, 'to': loss_to, 'smiles': loss_smiles})
     return {'fragments': fragments, 'losses': losses}
