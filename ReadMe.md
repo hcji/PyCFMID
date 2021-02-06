@@ -36,7 +36,8 @@ This program predicts spectra for an input molecule given a pre-trained CFM mode
     spectra = cfm_predict(smiles, prob_thresh=0.001, param_file='', config_file='', annotate_fragments=False, output_file=None, apply_postproc=True, suppress_exceptions=False)
     
 **smiles**: The smiles strings for the input molecule to fragment.  
-**prob_thresh**: The probability below which to prune unlikely fragmentations during fragmentation graph generation (default 0.001).    
+**prob_thresh**: The probability below which to prune unlikely fragmentations during fragmentation graph generation (default 0.001).
+**ion_source**: The ion source of mass. Usually, 'EI' for GC-MS, and 'ESI' for LC-MS/MS. Will not used if param_file is given.       
 **param_file**: (optional) The filename where the parameters of a trained cfm model can be found (if not given, assumes param_output.log in the current directory). This file is the output of cfm-train.    
 **config_file**: (optional) The filename where the configuration parameters of the cfm model can be found (if not given, assumes param_config.txt in the current directory). This needs to match the file passed to cfm-train during training.    
 **annotate_fragments**:(optional) Whether to include fragment information in the output spectra.
