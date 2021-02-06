@@ -36,7 +36,7 @@ This program predicts spectra for an input molecule given a pre-trained CFM mode
     spectra = cfm_predict(smiles, prob_thresh=0.001, param_file='', config_file='', annotate_fragments=False, output_file=None, apply_postproc=True, suppress_exceptions=False)
     
 **smiles**: The smiles strings for the input molecule to fragment.  
-**prob_thresh**: The probability below which to prune unlikely fragmentations during fragmentation graph generation (default 0.001).
+**prob_thresh**: The probability below which to prune unlikely fragmentations during fragmentation graph generation (default 0.001).    
 **ion_source**: The ion source of mass. Usually, 'EI' for GC-MS, and 'ESI' for LC-MS/MS. Will not used if param_file is given.       
 **param_file**: (optional) The filename where the parameters of a trained cfm model can be found (if not given, assumes param_output.log in the current directory). This file is the output of cfm-train.    
 **config_file**: (optional) The filename where the configuration parameters of the cfm model can be found (if not given, assumes param_config.txt in the current directory). This needs to match the file passed to cfm-train during training.    
@@ -57,6 +57,7 @@ Given an input spectrum and a list of candidate smiles strings, this program com
 **ppm_mass_tol**: (optional) The mass tolerance in ppm to use when matching peaks within the dot product comparison - will use higher resulting tolerance of ppm and abs (if not given defaults to 10 ppm).   
 **abs_mass_tol**: (optional) The mass tolerance in abs Da to use when matching peaks within the dot product comparison - will use higher resulting tolerance of ppm and abs (if not given defaults to 0.01 Da).      
 **prob_thresh**: The probability below which to prune unlikely fragmentations during fragmentation graph generation (default 0.001).    
+**ion_source**: The ion source of mass. Usually, 'EI' for GC-MS, and 'ESI' for LC-MS/MS. Will not used if param_file is given.   
 **param_file**: (optional) The filename where the parameters of a trained cfm model can be found (if not given, assumes param_output.log in the current directory). This file is the output of cfm-train.    
 **config_file**: (optional) The filename where the configuration parameters of the cfm model can be found (if not given, assumes param_config.txt in the current directory). This needs to match the file passed to cfm-train during training.    
 **score_type**: (optional) The type of scoring function to use when comparing spectra. Options: Jaccard (default), DotProduct.    
