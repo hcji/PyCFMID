@@ -6,10 +6,11 @@ uses Competitive Fragmentation Modeling to produce a probabilistic generative mo
 learning techniques to adapt the model parameters from data.  
 
 ## Note
-This is not an official wrapper.  
-Only Windows platform is currently supported because of a compile error in Linux (issue #1).   
-The CFM-ID version is 2.4, download from https://sourceforge.net/projects/cfm-id/.  
-CFM-ID 3.x version is only available with webserver http://cfmid3.wishartlab.com.  
+    1. This is not an official wrapper.  
+    2. Only Windows platform is currently supported because of a compile error in Linux (issue #1).   
+    3. The CFM-ID version is 2.4, download from https://sourceforge.net/projects/cfm-id/.  
+    4. CFM-ID 3.x version is only available with webserver http://cfmid3.wishartlab.com.   
+    5. Official CFM-ID 4.x version is already available with docker at https://hub.docker.com/r/wishartlab/cfmid.  
 
 ### Install
     
